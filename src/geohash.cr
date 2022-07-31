@@ -6,7 +6,7 @@
 module Geohash
   extend self
 
-  VERSION = "0.1.0"
+  VERSION = {{ `shards version #{__DIR__}`.chomp.stringify }}
 
   # Encodes latitude/longitude to geohash, either to specified precision or to automatically
   # evaluated precision.
