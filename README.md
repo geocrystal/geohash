@@ -42,6 +42,7 @@ Geohash.bounds("gbsuv")
 ```
 
 ![alt text](/assets/screenshot.png)
+
 <https://www.movable-type.co.uk/scripts/geohash.html>
 
 ## Contributing

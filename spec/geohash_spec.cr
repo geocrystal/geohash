@@ -1,12 +1,15 @@
 require "./spec_helper"
 
 describe Geohash do
-  it "#decode" do
-    Geohash.decode("gbsuv").should eq({lat: 48.669, lng: -4.329})
+  it "#encode" do
+    Geohash.encode(52.205, 0.119, 7).should eq("u120fxw")
+    Geohash.encode(48.669, -4.329).should eq("gbsuv")
+    Geohash.encode(40.7178486, -74.0002041).should eq("dr5rsh6wwm0")
   end
 
-  it "#encode" do
-    Geohash.encode(48.669, -4.329, 5).should eq("gbsuv")
+
+  it "#decode" do
+    Geohash.decode("gbsuv").should eq({lat: 48.669, lng: -4.329})
   end
 
   it "#bounds" do

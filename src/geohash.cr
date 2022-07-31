@@ -13,8 +13,21 @@ module Geohash
   #
   # ```
   # Geohash.encode(52.205, 0.119, 7) # => "u120fxw"
+  # Geohash.encode(48.669, -4.329) # => "gbsuv"
   # ```
-  def encode(latitude : Float64, longitude : Float64, precision = 12)
+  def encode(latitude : Float64, longitude : Float64, precision : Int32? = nil)
+    if precision.nil?
+      # refine geohash until it matches precision of supplied latitude/longitude
+      12.times do |p|
+        hash = Geohash.encode(latitude, longitude, p + 1)
+        posn = Geohash.decode(hash);
+
+        return hash if posn[:lat] == latitude && posn[:lng] == longitude
+      end
+
+      precision = 12 # set to maximum
+    end
+
     latlng = [latitude, longitude]
     points = [[-90.0, 90.0], [-180.0, 180.0]]
     is_lng = 1
