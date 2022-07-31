@@ -32,7 +32,7 @@ Geohash.decode("gbsuv") # => {lat: 48.669, lng: -4.329}
 Geohash.neighbors("gbsuv")
 # =>{n: "gbsvj", ne: "gbsvn", e: "gbsuy", se: "gbsuw", s: "gbsut", sw: "gbsus", w: "gbsuu", nw: "gbsvh"}
 #
-# Neighbours:
+# Neighbors:
 # gbsvh	gbsvj gbsvn
 # gbsuu	gbsuv gbsuy
 # gbsus	gbsut gbsuw
