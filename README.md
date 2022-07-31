@@ -1,5 +1,9 @@
 # geohash
 
+[![Crystal CI](https://github.com/geocrystal/geohash/actions/workflows/crystal.yml/badge.svg)](https://github.com/geocrystal/geohash/actions/workflows/crystal.yml)
+[![License](https://img.shields.io/github/license/geocrystal/geohash.svg)](https://github.com/geocrystal/geohash/blob/master/LICENSE)
+
+
 GeoHash encode/decode library for pure Crystal.
 
 A [geohash](https://en.wikipedia.org/wiki/Geohash) is a convenient way of expressing a location (anywhere in the world)
