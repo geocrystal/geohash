@@ -34,6 +34,9 @@ Geohash.neighbors("gbsuv")
 # gbsus	gbsut gbsuw
 ```
 
+![alt text](/assets/screenshot.png)
+<https://www.movable-type.co.uk/scripts/geohash.html>
+
 ## Contributing
 
 1. Fork it (<https://github.com/geocrystal/geohash/fork>)
