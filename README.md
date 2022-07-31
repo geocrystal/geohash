@@ -4,7 +4,7 @@
 [![License](https://img.shields.io/github/license/geocrystal/geohash.svg)](https://github.com/geocrystal/geohash/blob/master/LICENSE)
 [![GitHub release](https://img.shields.io/github/release/geocrystal/geohash.svg)](https://github.com/geocrystal/geohash/releases)
 
-GeoHash encode/decode library for pure Crystal.
+Geohash encode/decode library for pure Crystal.
 
 A [geohash](https://en.wikipedia.org/wiki/Geohash) is a convenient way of expressing a location (anywhere in the world)
 using a short alphanumeric string, with greater precision obtained with longer strings.
