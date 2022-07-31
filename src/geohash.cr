@@ -20,7 +20,7 @@ module Geohash
       # refine geohash until it matches precision of supplied latitude/longitude
       12.times do |p|
         hash = Geohash.encode(latitude, longitude, p + 1)
-        posn = Geohash.decode(hash);
+        posn = Geohash.decode(hash)
 
         return hash if posn[:lat] == latitude && posn[:lng] == longitude
       end
