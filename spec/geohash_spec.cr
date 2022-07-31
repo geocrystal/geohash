@@ -7,7 +7,6 @@ describe Geohash do
     Geohash.encode(40.7178486, -74.0002041).should eq("dr5rsh6wwm0")
   end
 
-
   it "#decode" do
     Geohash.decode("gbsuv").should eq({lat: 48.669, lng: -4.329})
   end

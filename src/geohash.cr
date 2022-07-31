@@ -13,7 +13,7 @@ module Geohash
   #
   # ```
   # Geohash.encode(52.205, 0.119, 7) # => "u120fxw"
-  # Geohash.encode(48.669, -4.329) # => "gbsuv"
+  # Geohash.encode(48.669, -4.329)   # => "gbsuv"
   # ```
   def encode(latitude : Float64, longitude : Float64, precision : Int32? = nil)
     if precision.nil?
