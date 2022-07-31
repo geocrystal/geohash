@@ -15,7 +15,7 @@ module Geohash
   # Geohash.encode(52.205, 0.119, 7) # => "u120fxw"
   # Geohash.encode(48.669, -4.329)   # => "gbsuv"
   # ```
-  def encode(latitude : Float64, longitude : Float64, precision : Int32? = nil)
+  def encode(latitude : Float64, longitude : Float64, precision : Int32? = nil) : String
     if precision.nil?
       # refine geohash until it matches precision of supplied latitude/longitude
       MAX_PRECISION.times do |p|
@@ -32,7 +32,7 @@ module Geohash
     points = [[-90.0, 90.0], [-180.0, 180.0]]
     is_lng = 1
 
-    (0...precision).map {
+    (0...precision).join do
       ch = 0
 
       5.times do |bit|
@@ -43,7 +43,7 @@ module Geohash
       end
 
       BASE32[ch, 1]
-    }.join
+    end
   end
 
   # Decode geohash to latitude/longitude (location is approximate center of geohash cell,
