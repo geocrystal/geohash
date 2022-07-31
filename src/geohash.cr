@@ -2,7 +2,7 @@
 #
 # https://en.wikipedia.org/wiki/Geohash
 #
-# Based on https://github.com/chrisveness/latlon-geohash/blob/master/latlon-geohash.js
+# Based on https://github.com/davetroy/geohash-js/blob/master/geohash.js
 module Geohash
   extend self
 
