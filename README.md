@@ -32,6 +32,9 @@ Geohash.neighbors("gbsuv")
 # gbsvh	gbsvj gbsvn
 # gbsuu	gbsuv gbsuy
 # gbsus	gbsut gbsuw
+
+Geohash.bounds("gbsuv")
+# => {sw: {lat: 48.6474609375, lng: -4.3505859375}, ne: {lat: 48.69140625, lng: -4.306640625}}
 ```
 
 ![alt text](/assets/screenshot.png)
