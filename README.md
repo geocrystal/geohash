@@ -22,8 +22,8 @@ using a short alphanumeric string, with greater precision obtained with longer s
 ```crystal
 require "geohash"
 
-Geohash.encode(52.205, 0.119, 7) # => "u120fxw"
-Geohash.decode('u120fxw') # => {lat: 52.205, lng: 0.1188}
+Geohash.encode(48.669, -4.329, 5) # => "gbsuv"
+Geohash.decode("gbsuv") # => {lat: 48.669, lng: -4.329}
 
 Geohash.neighbors("gbsuv")
 # =>{n: "gbsvj", ne: "gbsvn", e: "gbsuy", se: "gbsuw", s: "gbsut", sw: "gbsus", w: "gbsuu", nw: "gbsvh"}
