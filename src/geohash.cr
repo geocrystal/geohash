@@ -18,14 +18,14 @@ module Geohash
   def encode(latitude : Float64, longitude : Float64, precision : Int32? = nil)
     if precision.nil?
       # refine geohash until it matches precision of supplied latitude/longitude
-      12.times do |p|
+      MAX_PRECISION.times do |p|
         hash = Geohash.encode(latitude, longitude, p + 1)
         posn = Geohash.decode(hash)
 
         return hash if posn[:lat] == latitude && posn[:lng] == longitude
       end
 
-      precision = 12 # set to maximum
+      precision = MAX_PRECISION
     end
 
     latlng = [latitude, longitude]
@@ -123,6 +123,8 @@ module Geohash
     # append letter for direction to parent
     parent + BASE32.char_at(NEIGHBORS[direction][type].index(last_ch).not_nil!)
   end
+
+  private MAX_PRECISION = 12
 
   # (geohash-specific) Base32 map
   private BASE32 = "0123456789bcdefghjkmnpqrstuvwxyz"
