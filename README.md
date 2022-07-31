@@ -2,7 +2,7 @@
 
 [![Crystal CI](https://github.com/geocrystal/geohash/actions/workflows/crystal.yml/badge.svg)](https://github.com/geocrystal/geohash/actions/workflows/crystal.yml)
 [![License](https://img.shields.io/github/license/geocrystal/geohash.svg)](https://github.com/geocrystal/geohash/blob/master/LICENSE)
-
+[![GitHub release](https://img.shields.io/github/release/geocrystal/geohash.svg)](https://github.com/geocrystal/geohash/releases)
 
 GeoHash encode/decode library for pure Crystal.
 
