@@ -9,6 +9,13 @@ describe Geohash do
 
   it "#decode" do
     Geohash.decode("gbsuv").should eq({lat: 48.669, lng: -4.329})
+    Geohash.decode("u120fxw").should eq({lat: 52.205, lng: 0.1188})
+    Geohash.decode("dr5rsh6wwm0").should eq({lat: 40.7178486, lng: -74.0002041})
+
+    # Edge cases
+    Geohash.decode("0").should eq({lat: -67.5, lng: -157.5})
+    Geohash.decode("z").should eq({lat: 67.5, lng: 157.5})
+    Geohash.decode("").should eq({lat: 0.0, lng: 0.0})
   end
 
   it "#bounds" do
