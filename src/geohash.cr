@@ -12,37 +12,75 @@ module Geohash
   # evaluated precision.
   #
   # ```
-  # Geohash.encode(52.205, 0.119, 7) # => "u120fxw"
-  # Geohash.encode(48.669, -4.329)   # => "gbsuv"
+  # Geohash.encode(48.669, -4.329) # => "gbsuv"
   # ```
-  def encode(latitude : Float64, longitude : Float64, precision : Int32? = nil) : String
-    if precision.nil?
-      # refine geohash until it matches precision of supplied latitude/longitude
-      MAX_PRECISION.times do |p|
-        hash = Geohash.encode(latitude, longitude, p + 1)
-        posn = Geohash.decode(hash)
+  def encode(latitude : Float64, longitude : Float64) : String
+    # Calculate precision to use
+    lat_decimals = count_significant_decimals(latitude)
+    lon_decimals = count_significant_decimals(longitude)
+    max_decimals = {lat_decimals, lon_decimals}.max
 
-        return hash if posn[:lat] == latitude && posn[:lng] == longitude
+    # Map decimal places to geohash precision
+    # This mapping is based on the relationship between coordinate precision and geohash length
+    precision = case max_decimals
+                when 0..3 then 5  # ~2.4km precision
+                when 4    then 7  # ~76m precision
+                when 5    then 9  # ~2.4m precision
+                when 6    then 10 # ~60cm precision
+                when 7    then 11 # ~15cm precision
+                else           12 # ~37mm precision
+                end
+
+    encode latitude, longitude, precision
+  end
+
+  # Encodes latitude/longitude to geohash, either to specified precision or to automatically
+  # evaluated precision.
+  #
+  # ```
+  # Geohash.encode(52.205, 0.119, 7) # => "u120fxw"
+  # ```
+  def encode(latitude : Float64, longitude : Float64, precision : Int32) : String
+    raise ArgumentError.new("Invalid latitude: #{latitude}") unless -90.0 <= latitude <= 90.0
+    raise ArgumentError.new("Invalid longitude: #{longitude}") unless -180.0 <= longitude <= 180.0
+    raise ArgumentError.new("Precision must be positive") unless precision > 0
+
+    lat_min, lat_max = -90.0, 90.0
+    lon_min, lon_max = -180.0, 180.0
+
+    String.build(precision) do |str|
+      bits = 0_u8
+      bit = 0
+      is_even = true
+
+      while str.bytesize < precision
+        if is_even # longitude
+          mid = (lon_min + lon_max) / 2.0
+          if longitude >= mid
+            bits |= (1_u8 << (4 - bit))
+            lon_min = mid
+          else
+            lon_max = mid
+          end
+        else # latitude
+          mid = (lat_min + lat_max) / 2.0
+          if latitude >= mid
+            bits |= (1_u8 << (4 - bit))
+            lat_min = mid
+          else
+            lat_max = mid
+          end
+        end
+
+        is_even = !is_even
+        bit += 1
+
+        if bit == 5
+          str << BASE32[bits]
+          bits = 0_u8
+          bit = 0
+        end
       end
-
-      precision = MAX_PRECISION
-    end
-
-    latlng = [latitude, longitude]
-    points = [[-90.0, 90.0], [-180.0, 180.0]]
-    is_lng = 1
-
-    (0...precision).join do
-      ch = 0
-
-      5.times do |bit|
-        mid = (points[is_lng][0] + points[is_lng][1]) / 2
-        points[is_lng][latlng[is_lng] > mid ? 0 : 1] = mid
-        ch |= BITS[bit] if latlng[is_lng] > mid
-        is_lng ^= 1
-      end
-
-      BASE32[ch, 1]
     end
   end
 
@@ -104,6 +142,26 @@ module Geohash
       w:  adjacent(geohash, :w),
       nw: adjacent(adjacent(geohash, :n), :w),
     }
+  end
+
+  @[AlwaysInline]
+  private def count_significant_decimals(value : Float64) : Int32
+    abs_value = value.abs
+
+    return 0 if (abs_value - abs_value.round).abs < 1e-10
+
+    scaled = abs_value
+    epsilon = 1e-9
+
+    # Check up to 10 decimal places
+    10.times do |i|
+      scaled *= 10.0
+      if (scaled - scaled.round).abs < epsilon
+        return i + 1
+      end
+    end
+
+    7
   end
 
   # Determines adjacent cell in given direction.
